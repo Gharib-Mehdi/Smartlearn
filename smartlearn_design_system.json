@@ -1,0 +1,540 @@
+{
+    "project": "SmartLearn",
+    "description": "Système de détection du style d'apprentissage (Visuel / Auditif / Kinesthésique) avec recommandations IA personnalisées.",
+    "design_reference": "Template B — Dark Quiz UI (Frontend Quiz App style)",
+    "design_philosophy": "Dark UI professionnel et sobre. Moderne, crédible, académique. Pas de flashy gratuit. Chaque élément a un but. Le design doit inspirer confiance et sérieux tout en restant engageant.",
+  
+    "color_palette": {
+      "description": "Palette principale extraite fidèlement de la Template B",
+      "background": {
+        "primary": "#1E2A3A",
+        "secondary": "#2A3550",
+        "card": "#2E3D56",
+        "card_hover": "#364865",
+        "overlay": "rgba(30, 42, 58, 0.95)"
+      },
+      "accent": {
+        "primary": "#A855F7",
+        "primary_hover": "#9333EA",
+        "primary_light": "rgba(168, 85, 247, 0.15)",
+        "secondary": "#06B6D4",
+        "secondary_light": "rgba(6, 182, 212, 0.15)",
+        "teal": "#14B8A6"
+      },
+      "text": {
+        "primary": "#F1F5F9",
+        "secondary": "#94A3B8",
+        "muted": "#64748B",
+        "on_accent": "#FFFFFF",
+        "on_card": "#E2E8F0"
+      },
+      "learning_styles": {
+        "visuel": {
+          "color": "#06B6D4",
+          "background": "rgba(6, 182, 212, 0.15)",
+          "label": "Visuel",
+          "icon": "👁️",
+          "description": "Vous apprenez mieux avec des images, schémas et vidéos"
+        },
+        "auditif": {
+          "color": "#A855F7",
+          "background": "rgba(168, 85, 247, 0.15)",
+          "label": "Auditif",
+          "icon": "🎧",
+          "description": "Vous apprenez mieux en écoutant et en discutant"
+        },
+        "kinesthesique": {
+          "color": "#14B8A6",
+          "background": "rgba(20, 184, 166, 0.15)",
+          "label": "Kinesthésique",
+          "icon": "✋",
+          "description": "Vous apprenez mieux en pratiquant et en expérimentant"
+        }
+      },
+      "status": {
+        "success": "#22C55E",
+        "error": "#EF4444",
+        "warning": "#F59E0B",
+        "info": "#06B6D4"
+      },
+      "border": {
+        "default": "rgba(148, 163, 184, 0.12)",
+        "hover": "rgba(168, 85, 247, 0.4)",
+        "selected": "#A855F7",
+        "card": "rgba(148, 163, 184, 0.08)"
+      }
+    },
+  
+    "typography": {
+      "description": "Typographie extraite de Template B — moderne, lisible, hiérarchisée",
+      "font_family": {
+        "primary": "'Inter', 'Segoe UI', sans-serif",
+        "mono": "'JetBrains Mono', 'Fira Code', monospace"
+      },
+      "google_fonts_import": "https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap",
+      "scale": {
+        "xs": "0.75rem",
+        "sm": "0.875rem",
+        "base": "1rem",
+        "lg": "1.125rem",
+        "xl": "1.25rem",
+        "2xl": "1.5rem",
+        "3xl": "1.875rem",
+        "4xl": "2.25rem",
+        "5xl": "3rem"
+      },
+      "weights": {
+        "light": 300,
+        "regular": 400,
+        "medium": 500,
+        "semibold": 600,
+        "bold": 700,
+        "extrabold": 800
+      },
+      "usage": {
+        "page_title": "3xl-5xl, weight 800, color text.primary",
+        "section_title": "2xl-3xl, weight 700, color text.primary",
+        "card_title": "lg-xl, weight 600, color text.primary",
+        "body": "base, weight 400, color text.secondary",
+        "label": "sm, weight 500, color text.secondary",
+        "caption": "xs, weight 400, color text.muted",
+        "button": "sm-base, weight 600, uppercase tracking-wide",
+        "question_text": "xl-2xl, weight 600, color text.primary",
+        "choice_letter": "sm, weight 700, font-mono",
+        "score_big": "4xl-5xl, weight 800, color accent.primary"
+      }
+    },
+  
+    "spacing": {
+      "unit": "4px",
+      "scale": {
+        "1": "4px", "2": "8px", "3": "12px", "4": "16px",
+        "5": "20px", "6": "24px", "8": "32px", "10": "40px",
+        "12": "48px", "16": "64px", "20": "80px", "24": "96px"
+      },
+      "component_padding": {
+        "card": "24px 28px",
+        "button": "12px 24px",
+        "input": "12px 16px",
+        "choice_item": "16px 20px",
+        "page_container": "0 auto, max-width 900px, padding 24px"
+      }
+    },
+  
+    "border_radius": {
+      "sm": "6px",
+      "md": "10px",
+      "lg": "14px",
+      "xl": "18px",
+      "2xl": "24px",
+      "full": "9999px",
+      "usage": {
+        "button": "10px",
+        "card": "14px",
+        "choice_item": "10px",
+        "input": "10px",
+        "badge": "9999px",
+        "progress_bar": "9999px"
+      }
+    },
+  
+    "shadows": {
+      "card": "0 4px 24px rgba(0, 0, 0, 0.25)",
+      "card_hover": "0 8px 32px rgba(0, 0, 0, 0.35)",
+      "button_accent": "0 4px 20px rgba(168, 85, 247, 0.35)",
+      "choice_selected": "0 0 0 2px #A855F7, 0 4px 16px rgba(168, 85, 247, 0.25)",
+      "input_focus": "0 0 0 3px rgba(168, 85, 247, 0.25)"
+    },
+  
+    "components": {
+  
+      "navbar": {
+        "description": "Navigation bar sobre en haut de page",
+        "background": "background.secondary",
+        "border_bottom": "border.default",
+        "height": "64px",
+        "logo": {
+          "text": "SmartLearn",
+          "color": "text.primary",
+          "weight": 700,
+          "size": "xl",
+          "accent_dot": "accent.primary"
+        },
+        "dark_mode_toggle": {
+          "present": true,
+          "style": "pill toggle avec icône soleil/lune",
+          "position": "right side of navbar"
+        }
+      },
+  
+      "button": {
+        "variants": {
+          "primary": {
+            "background": "accent.primary",
+            "color": "text.on_accent",
+            "hover_background": "accent.primary_hover",
+            "shadow": "shadows.button_accent",
+            "description": "Bouton principal violet — actions principales"
+          },
+          "outline": {
+            "background": "transparent",
+            "border": "2px solid accent.primary",
+            "color": "accent.primary",
+            "hover_background": "accent.primary_light",
+            "description": "Bouton secondaire — actions secondaires"
+          },
+          "ghost": {
+            "background": "transparent",
+            "color": "text.secondary",
+            "hover_background": "rgba(148, 163, 184, 0.1)",
+            "description": "Bouton discret — navigation"
+          }
+        },
+        "sizes": {
+          "sm": "padding 8px 16px, font-size sm",
+          "md": "padding 12px 24px, font-size base",
+          "lg": "padding 16px 32px, font-size lg, width 100%"
+        },
+        "transitions": "all 0.2s ease"
+      },
+  
+      "card": {
+        "background": "background.card",
+        "border": "1px solid border.card",
+        "border_radius": "border_radius.lg",
+        "padding": "spacing.component_padding.card",
+        "shadow": "shadows.card",
+        "hover": {
+          "border_color": "border.hover",
+          "shadow": "shadows.card_hover",
+          "transform": "translateY(-2px)",
+          "transition": "all 0.25s ease"
+        }
+      },
+  
+      "quiz_choice_item": {
+        "description": "Les choix de réponse du quiz — élément clé de la Template B",
+        "layout": "flex row, align-center, gap 16px",
+        "background": "background.card",
+        "border": "1px solid border.default",
+        "border_radius": "border_radius.choice_item",
+        "padding": "spacing.component_padding.choice_item",
+        "letter_badge": {
+          "size": "36px x 36px",
+          "background": "background.secondary",
+          "color": "text.secondary",
+          "border_radius": "border_radius.sm",
+          "font": "typography.choice_letter"
+        },
+        "states": {
+          "default": "border: border.default, background: background.card",
+          "hover": "border: rgba(168,85,247,0.4), background: card_hover, cursor pointer",
+          "selected": "border: accent.primary 2px, background: accent.primary_light, letter_badge_bg: accent.primary, letter_badge_color: white",
+          "correct": "border: status.success, background: rgba(34,197,94,0.1)",
+          "incorrect": "border: status.error, background: rgba(239,68,68,0.1)"
+        },
+        "transition": "all 0.2s ease"
+      },
+  
+      "progress_bar": {
+        "description": "Barre de progression du quiz — visible en haut de la page quiz",
+        "track_background": "background.secondary",
+        "fill_background": "accent.primary",
+        "height": "6px",
+        "border_radius": "border_radius.full",
+        "transition": "width 0.4s ease",
+        "label": "Question X / Y — affiché au-dessus"
+      },
+  
+      "input_field": {
+        "background": "background.card",
+        "border": "1px solid border.default",
+        "border_radius": "border_radius.input",
+        "padding": "spacing.component_padding.input",
+        "color": "text.primary",
+        "placeholder_color": "text.muted",
+        "focus": {
+          "border_color": "accent.primary",
+          "box_shadow": "shadows.input_focus",
+          "outline": "none"
+        }
+      },
+  
+      "score_chart": {
+        "description": "Graphique des scores sur la page résultats",
+        "type": "Bar chart horizontal OU radar chart",
+        "library": "Chart.js via CDN",
+        "colors_per_style": {
+          "visuel": "color_palette.learning_styles.visuel.color",
+          "auditif": "color_palette.learning_styles.auditif.color",
+          "kinesthesique": "color_palette.learning_styles.kinesthesique.color"
+        },
+        "bar_style": {
+          "background": "gradient from style color to transparent",
+          "border_radius": "6px",
+          "height_per_bar": "40px"
+        },
+        "chart_background": "transparent",
+        "grid_color": "border.default",
+        "text_color": "text.secondary"
+      },
+  
+      "result_dominant_badge": {
+        "description": "Badge large affichant le style dominant sur la page résultats",
+        "layout": "centered card avec icon + label + score %",
+        "background": "gradient from style color (low opacity) to transparent",
+        "border": "2px solid style color",
+        "border_radius": "border_radius.xl",
+        "icon_size": "48px",
+        "title_size": "typography.3xl, weight 800",
+        "animation": "fade-in + scale-up on load"
+      },
+  
+      "recommendation_card": {
+        "description": "Card affichant le texte généré par l'API LLM",
+        "background": "background.card",
+        "border_left": "4px solid accent.primary",
+        "border_radius": "border_radius.lg",
+        "padding": "24px 28px",
+        "icon": "✨ ou 🤖 en haut à gauche",
+        "title": "'Recommandations personnalisées par IA'",
+        "title_color": "accent.primary",
+        "body_color": "text.secondary",
+        "loading_state": "skeleton animation ou spinner violet pendant l'appel API"
+      },
+  
+      "auth_card": {
+        "description": "Formulaire login / register",
+        "max_width": "440px",
+        "centered": true,
+        "background": "background.card",
+        "border": "1px solid border.card",
+        "border_radius": "border_radius.xl",
+        "padding": "40px",
+        "shadow": "shadows.card"
+      },
+  
+      "dark_mode_toggle": {
+        "style": "pill switch",
+        "width": "52px",
+        "height": "28px",
+        "track_dark": "background.secondary",
+        "track_light": "rgba(148,163,184,0.3)",
+        "knob": "white circle",
+        "icons": "☀️ light side / 🌙 dark side",
+        "transition": "0.3s ease"
+      }
+    },
+  
+    "pages": {
+  
+      "landing_page": {
+        "url": "/",
+        "sections": [
+          {
+            "id": "hero",
+            "layout": "full viewport height, centered content",
+            "background": "background.primary avec subtle grid pattern (svg background, opacity 0.05)",
+            "content": {
+              "badge": "pill badge: '✨ Découvrez votre style d'apprentissage', background accent.primary_light, color accent.primary",
+              "title": "Apprenez à votre façon",
+              "subtitle": "Passez le quiz SmartLearn et découvrez si vous êtes Visuel, Auditif ou Kinesthésique. Recevez des recommandations personnalisées par IA.",
+              "cta_primary": "Commencer le quiz — button primary lg",
+              "cta_secondary": "Se connecter — button outline",
+              "visual": "3 cards flottantes représentant les 3 styles (Visuel/Auditif/Kinesthésique) avec leurs couleurs distinctes, légère animation hover"
+            }
+          },
+          {
+            "id": "how_it_works",
+            "title": "Comment ça marche ?",
+            "steps": [
+              {"number": "01", "title": "Répondez au quiz", "description": "15 questions sur vos habitudes d'apprentissage"},
+              {"number": "02", "title": "Analyse instantanée", "description": "Le système calcule vos scores VAK"},
+              {"number": "03", "title": "Recommandations IA", "description": "Une IA génère des conseils personnalisés pour vous"}
+            ]
+          }
+        ]
+      },
+  
+      "login_page": {
+        "url": "/login/",
+        "layout": "centered, full height",
+        "background": "background.primary",
+        "card": "auth_card component",
+        "fields": ["Email", "Mot de passe"],
+        "button": "Se connecter — primary lg, full width",
+        "link": "Pas encore de compte ? S'inscrire",
+        "logo": "SmartLearn en haut du formulaire"
+      },
+  
+      "register_page": {
+        "url": "/register/",
+        "layout": "centered, full height",
+        "background": "background.primary",
+        "card": "auth_card component",
+        "fields": ["Nom d'utilisateur", "Email", "Mot de passe", "Confirmer le mot de passe"],
+        "button": "Créer mon compte — primary lg, full width",
+        "link": "Déjà un compte ? Se connecter"
+      },
+  
+      "dashboard_page": {
+        "url": "/dashboard/",
+        "layout": "sidebar optionnelle OU navbar + content zone",
+        "sections": [
+          {
+            "id": "welcome_banner",
+            "content": "Bonjour [Username] 👋 + card CTA pour lancer le quiz"
+          },
+          {
+            "id": "last_result",
+            "content": "Dernier résultat (si existant) : badge style dominant + score + date",
+            "visible_if": "l'utilisateur a déjà passé le quiz"
+          },
+          {
+            "id": "history",
+            "content": "Tableau ou liste des sessions précédentes avec date + style dominant + score %",
+            "columns": ["Date", "Style Dominant", "Visuel %", "Auditif %", "Kinesthésique %", "Actions"]
+          }
+        ]
+      },
+  
+      "quiz_page": {
+        "url": "/quiz/",
+        "layout": "split layout comme Template B : question à gauche, choix à droite (desktop) / stacked sur mobile",
+        "header": {
+          "progress_bar": "en haut, pleine largeur, composant progress_bar",
+          "question_counter": "Question X / Y",
+          "quiz_title": "SmartLearn Quiz"
+        },
+        "question_zone": {
+          "position": "left column (40%)",
+          "content": "Texte de la question en typography.question_text"
+        },
+        "choices_zone": {
+          "position": "right column (60%)",
+          "items": "Liste verticale de 3 choix (A/B/C), composant quiz_choice_item",
+          "spacing": "gap 12px entre chaque choix"
+        },
+        "footer": {
+          "button_submit": "Valider — primary, disabled si aucun choix sélectionné",
+          "button_next": "Question suivante — apparaît après validation"
+        },
+        "behavior": {
+          "one_question_at_a_time": true,
+          "save_on_each_answer": true,
+          "smooth_transition": "fade ou slide entre questions"
+        }
+      },
+  
+      "results_page": {
+        "url": "/results/<session_id>/",
+        "layout": "single column, centered, max-width 800px",
+        "sections": [
+          {
+            "id": "dominant_style_reveal",
+            "description": "Révélation dramatique du style dominant — inspiré de Template A mais dans le style dark de Template B",
+            "content": "Vous êtes [Style] ! + icon + score dominant %",
+            "component": "result_dominant_badge",
+            "animation": "fade-in + scale depuis 0.8 vers 1.0, délai 0.3s"
+          },
+          {
+            "id": "scores_chart",
+            "title": "Détail de vos scores",
+            "component": "score_chart",
+            "data": "visuel_pct, auditif_pct, kinesthesique_pct depuis le backend"
+          },
+          {
+            "id": "scores_breakdown",
+            "description": "3 cards horizontales montrant chaque style avec % et barre de progression individuelle",
+            "colors": "couleurs respectives des 3 styles"
+          },
+          {
+            "id": "ai_recommendations",
+            "title": "Recommandations personnalisées",
+            "component": "recommendation_card",
+            "data": "texte généré par API LLM",
+            "loading": "skeleton loader pendant la génération"
+          },
+          {
+            "id": "actions",
+            "buttons": [
+              "Refaire le quiz — outline button",
+              "Retour au tableau de bord — ghost button"
+            ]
+          }
+        ]
+      }
+    },
+  
+    "layout": {
+      "max_width": "1100px",
+      "quiz_max_width": "900px",
+      "auth_max_width": "440px",
+      "container_padding": "0 24px",
+      "navbar_height": "64px",
+      "grid": {
+        "quiz_desktop": "grid-template-columns: 2fr 3fr, gap 48px",
+        "scores_breakdown": "grid-template-columns: repeat(3, 1fr), gap 16px",
+        "how_it_works": "grid-template-columns: repeat(3, 1fr), gap 24px"
+      },
+      "responsive_breakpoints": {
+        "mobile": "< 640px — stack everything vertically",
+        "tablet": "640px-1024px — reduce gaps, smaller fonts",
+        "desktop": "> 1024px — full layout"
+      }
+    },
+  
+    "animations": {
+      "page_load": "fade-in 0.4s ease",
+      "card_hover": "transform translateY(-2px), transition 0.25s ease",
+      "choice_select": "border-color + background transition 0.2s ease",
+      "progress_bar_fill": "width transition 0.4s ease",
+      "result_reveal": "opacity 0→1 + scale 0.8→1, duration 0.5s, delay 0.3s",
+      "skeleton_loading": "shimmer animation background de gauche à droite",
+      "question_transition": "opacity fade 0.3s entre questions"
+    },
+  
+    "dark_light_mode": {
+      "default": "dark",
+      "toggle_present": true,
+      "light_mode_overrides": {
+        "background.primary": "#F8FAFC",
+        "background.secondary": "#F1F5F9",
+        "background.card": "#FFFFFF",
+        "text.primary": "#0F172A",
+        "text.secondary": "#475569",
+        "border.default": "rgba(15, 23, 42, 0.1)"
+      },
+      "css_approach": "class 'dark' sur le <html> ou <body>, variables CSS overridées"
+    },
+  
+    "django_template_integration": {
+      "base_template": "base.html — contient navbar, dark mode toggle, scripts CDN, block content",
+      "static_files": "CSS custom dans static/css/main.css, JS dans static/js/quiz.js",
+      "cdn_dependencies": [
+        "Bootstrap 5.3 CSS",
+        "Chart.js 4.x",
+        "Google Fonts Inter"
+      ],
+      "csrf_token": "Inclure {% csrf_token %} dans tous les formulaires POST",
+      "django_messages": "Afficher les messages Django (erreurs auth, succès) avec les couleurs status.*"
+    },
+  
+    "api_integration": {
+      "llm_api": {
+        "description": "Appel à l'API LLM depuis le backend Django pour générer les recommandations",
+        "trigger": "Après calcul des scores, avant affichage de la page résultats",
+        "prompt_template": "Tu es un expert en pédagogie et en styles d'apprentissage. L'utilisateur a obtenu les scores suivants au test VAK : Visuel: {visuel_pct}%, Auditif: {auditif_pct}%, Kinesthésique: {kinesthesique_pct}%. Son style dominant est {style_dominant}. Génère une analyse personnalisée de 3-4 paragraphes comprenant : 1) Une description de son profil d'apprentissage, 2) Ses points forts, 3) Des stratégies concrètes adaptées à son style, 4) Des outils et ressources recommandés. Réponds en français, avec un ton encourageant et professionnel.",
+        "response_handling": "Sauvegarder le texte en base de données dans le modèle Recommandation",
+        "loading_ui": "Afficher un skeleton loader pendant l'appel API (peut durer 2-5 secondes)",
+        "error_handling": "En cas d'échec API, afficher un message générique basé sur le style dominant"
+      }
+    },
+  
+    "accessibility": {
+      "focus_visible": "outline 2px solid accent.primary, offset 2px",
+      "color_contrast": "Tous les textes respectent WCAG AA minimum",
+      "aria_labels": "Ajouter aria-label sur les choix de quiz, les boutons icon-only",
+      "keyboard_navigation": "Le quiz doit être navigable au clavier (Enter pour sélectionner, Tab pour naviguer)"
+    }
+  }

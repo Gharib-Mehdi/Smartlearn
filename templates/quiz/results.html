@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% load quiz_extras %}
+{% block title %}Resultats - SmartLearn{% endblock %}
+{% block content %}
+<section class="sl-quiz-container sl-fade-in" style="padding:42px 24px 72px;">
+  <div class="sl-result-dominant sl-card">
+    <div class="result-icon">{% if resultat.style_dominant == 'VISUEL' %}???{% elif resultat.style_dominant == 'AUDITIF' %}??{% else %}?{% endif %}</div>
+    <div class="result-label">Style dominant detecte</div>
+    <div class="result-style">{{ resultat.style_dominant|style_label }}</div>
+    <div class="result-score">{{ resultat.pct_visuel }}% V / {{ resultat.pct_auditif }}% A / {{ resultat.pct_kinesthesique }}% K</div>
+  </div>
+  <div class="sl-card sl-mt-6">
+    <h3 style="font-size:1.25rem;">Detail de vos scores</h3>
+    <canvas id="scoresChart" height="140" class="sl-mt-4"></canvas>
+  </div>
+  <div class="sl-scores-grid sl-mt-6">
+    <div class="sl-card"><span class="sl-badge sl-badge-visuel">Visuel</span><h4 class="sl-mt-4">{{ resultat.pct_visuel }}%</h4></div>
+    <div class="sl-card"><span class="sl-badge sl-badge-auditif">Auditif</span><h4 class="sl-mt-4">{{ resultat.pct_auditif }}%</h4></div>
+    <div class="sl-card"><span class="sl-badge sl-badge-kinesthesique">Kinesthesique</span><h4 class="sl-mt-4">{{ resultat.pct_kinesthesique }}%</h4></div>
+  </div>
+  <div class="sl-recommendation-card sl-mt-6">
+    <div class="rec-header"><span>?</span><span class="rec-title">Recommandations personnalisees par IA</span></div>
+    <div class="rec-body">{{ recommandation.texte }}</div>
+  </div>
+  <div class="sl-mt-6" style="display:flex;gap:12px;flex-wrap:wrap;">
+    <a href="{% url 'quiz_start' %}" class="sl-btn sl-btn-outline sl-btn-md">Refaire le quiz</a>
+    <a href="{% url 'dashboard' %}" class="sl-btn sl-btn-ghost sl-btn-md">Retour au dashboard</a>
+  </div>
+</section>
+{% endblock %}
+{% block extra_js %}
+<script>
+  const payload = {{ scores_json|safe }};
+  const ctx = document.getElementById('scoresChart');
+  new Chart(ctx, {
+    type: 'radar',
+    data: {
+      labels: payload.labels,
+      datasets: [{
+        label: 'Scores VAK',
+        data: payload.scores,
+        backgroundColor: 'rgba(168,85,247,0.2)',
+        borderColor: '#A855F7',
+        borderWidth: 2,
+        pointBackgroundColor: ['#06B6D4', '#A855F7', '#14B8A6'],
+      }]
+    },
+    options: {
+      scales: { r: { min: 0, max: 100, ticks: { color: '#94A3B8' }, grid: { color: 'rgba(148,163,184,0.12)' }, pointLabels: { color: '#94A3B8' } } },
+      plugins: { legend: { labels: { color: '#94A3B8' } } }
+    }
+  });
+</script>
+{% endblock %}

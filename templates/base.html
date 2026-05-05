@@ -1,0 +1,51 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}SmartLearn{% endblock %}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <nav class="sl-navbar">
+        <div class="sl-container">
+            <a href="/" class="sl-logo">Smart<span>Learn</span></a>
+            <div class="sl-nav-actions">
+                {% if user.is_authenticated %}
+                    <span class="sl-nav-username">{{ user.username }}</span>
+                    <a href="/dashboard/" class="sl-btn sl-btn-ghost sl-btn-sm">Dashboard</a>
+                    <form method="post" action="/accounts/logout/" style="display:inline">
+                        {% csrf_token %}
+                        <button type="submit" class="sl-btn sl-btn-ghost sl-btn-sm">Deconnexion</button>
+                    </form>
+                {% else %}
+                    <a href="/accounts/login/" class="sl-btn sl-btn-ghost sl-btn-sm">Se connecter</a>
+                    <a href="/accounts/register/" class="sl-btn sl-btn-primary sl-btn-sm">S'inscrire</a>
+                {% endif %}
+                <button class="sl-theme-toggle" id="themeToggle" aria-label="Changer le theme">
+                    <span class="theme-icon-light">☀️</span>
+                    <span class="theme-icon-dark">🌙</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+    {% if messages %}
+    <div class="sl-messages">
+        <div class="sl-container">
+            {% for message in messages %}
+            <div class="sl-alert sl-alert-{{ message.tags }}">{{ message }}</div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+    <main>{% block content %}{% endblock %}</main>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="{% static 'js/theme.js' %}"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

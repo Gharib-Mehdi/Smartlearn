@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Inscription - SmartLearn{% endblock %}
+{% block content %}
+<section class="sl-auth-container" style="padding:56px 24px;">
+  <div class="sl-card" style="padding:40px; border-radius:18px;">
+    <h1 style="font-size:1.875rem; font-weight:800;">Inscription</h1>
+    <p class="sl-text-muted sl-mt-4">Creez votre compte SmartLearn.</p>
+    <form method="post" class="sl-mt-6">
+      {% csrf_token %}
+      <div class="sl-form-group"><label class="sl-label">Nom d'utilisateur</label>{{ form.username }}</div>
+      <div class="sl-form-group"><label class="sl-label">Email</label>{{ form.email }}</div>
+      <div class="sl-form-group"><label class="sl-label">Mot de passe</label>{{ form.password1 }}</div>
+      <div class="sl-form-group"><label class="sl-label">Confirmer le mot de passe</label>{{ form.password2 }}</div>
+      <button class="sl-btn sl-btn-primary sl-btn-lg">Creer mon compte</button>
+    </form>
+    <p class="sl-text-muted sl-mt-6">Deja un compte ? <a href="{% url 'login' %}" class="sl-text-accent">Se connecter</a></p>
+  </div>
+</section>
+{% endblock %}

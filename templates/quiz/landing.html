@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}SmartLearn - Apprenez a votre facon{% endblock %}
+{% block content %}
+<section class="sl-container sl-fade-in" style="padding:64px 24px;">
+  <div class="sl-card" style="text-align:center; padding:64px 32px;">
+    <span class="sl-badge sl-badge-accent">Decouvrez votre style d'apprentissage</span>
+    <h1 style="font-size:3rem; font-weight:800; margin:18px 0;">Apprenez a votre facon</h1>
+    <p class="sl-text-muted" style="max-width:760px; margin:0 auto 28px; line-height:1.7;">Passez le quiz SmartLearn et decouvrez si vous etes Visuel, Auditif ou Kinesthesique. Recevez des recommandations personnalisees par IA.</p>
+    <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap;">
+      <a href="/accounts/register/" class="sl-btn sl-btn-primary sl-btn-md">Commencer le quiz</a>
+      <a href="/accounts/login/" class="sl-btn sl-btn-outline sl-btn-md">Se connecter</a>
+    </div>
+  </div>
+  <div class="sl-mt-8" style="display:grid; grid-template-columns:repeat(3,1fr); gap:24px;">
+    <div class="sl-card"><h3 style="font-size:1.25rem;">01. Repondez au quiz</h3><p class="sl-text-muted sl-mt-4">15 questions sur vos habitudes d'apprentissage.</p></div>
+    <div class="sl-card"><h3 style="font-size:1.25rem;">02. Analyse instantanee</h3><p class="sl-text-muted sl-mt-4">Le systeme calcule vos scores VAK automatiquement.</p></div>
+    <div class="sl-card"><h3 style="font-size:1.25rem;">03. Recommandations IA</h3><p class="sl-text-muted sl-mt-4">Des conseils pratiques personnalises sont generes pour vous.</p></div>
+  </div>
+</section>
+{% endblock %}

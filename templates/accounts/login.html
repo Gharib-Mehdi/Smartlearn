@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Connexion - SmartLearn{% endblock %}
+{% block content %}
+<section class="sl-auth-container" style="padding:56px 24px;">
+  <div class="sl-card" style="padding:40px; border-radius:18px;">
+    <h1 style="font-size:1.875rem; font-weight:800;">Connexion</h1>
+    <p class="sl-text-muted sl-mt-4">Connectez-vous pour acceder au dashboard.</p>
+    <form method="post" class="sl-mt-6">
+      {% csrf_token %}
+      <input type="hidden" name="next" value="{{ request.GET.next }}" />
+      <div class="sl-form-group"><label class="sl-label">Nom d'utilisateur</label>{{ form.username }}</div>
+      <div class="sl-form-group"><label class="sl-label">Mot de passe</label>{{ form.password }}</div>
+      <button class="sl-btn sl-btn-primary sl-btn-lg">Se connecter</button>
+    </form>
+    <p class="sl-text-muted sl-mt-6">Pas encore de compte ? <a href="{% url 'register' %}" class="sl-text-accent">S'inscrire</a></p>
+  </div>
+</section>
+{% endblock %}

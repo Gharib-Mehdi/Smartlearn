@@ -1,0 +1,597 @@
+[
+  {
+    "model": "quiz.quiz",
+    "pk": 1,
+    "fields": {
+      "titre": "Quiz VAK SmartLearn",
+      "description": "Test de detection du style d'apprentissage VAK",
+      "actif": true,
+      "created_at": "2026-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 1,
+    "fields": {
+      "quiz": 1,
+      "enonce": "Quand vous apprenez quelque chose de nouveau, vous preferez...",
+      "ordre": 1
+    }
+  },
+  {
+    "model": "quiz.choix",
+    "pk": 1,
+    "fields": {
+      "question": 1,
+      "texte": "Voir des schemas, diagrammes ou videos explicatives",
+      "style": "VISUEL",
+      "lettre": "A"
+    }
+  },
+  {
+    "model": "quiz.choix",
+    "pk": 2,
+    "fields": {
+      "question": 1,
+      "texte": "Ecouter une explication orale ou un podcast",
+      "style": "AUDITIF",
+      "lettre": "B"
+    }
+  },
+  {
+    "model": "quiz.choix",
+    "pk": 3,
+    "fields": {
+      "question": 1,
+      "texte": "Pratiquer directement avec un exercice concret",
+      "style": "KINESTHESIQUE",
+      "lettre": "C"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 2,
+    "fields": {
+      "quiz": 1,
+      "enonce": "Lorsque vous avez du mal a retenir une information, vous...",
+      "ordre": 2
+    }
+  },
+  {
+    "model": "quiz.choix",
+    "pk": 4,
+    "fields": {
+      "question": 2,
+      "texte": "Dessinez un schema ou creez une fiche visuelle coloree",
+      "style": "VISUEL",
+      "lettre": "A"
+    }
+  },
+  {
+    "model": "quiz.choix",
+    "pk": 5,
+    "fields": {
+      "question": 2,
+      "texte": "Repetez l'information a voix haute ou l'expliquez a quelqu'un",
+      "style": "AUDITIF",
+      "lettre": "B"
+    }
+  },
+  {
+    "model": "quiz.choix",
+    "pk": 6,
+    "fields": {
+      "question": 2,
+      "texte": "Associez cette information a une action ou une experience vecue",
+      "style": "KINESTHESIQUE",
+      "lettre": "C"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 3,
+    "fields": {
+      "quiz": 1,
+      "enonce": "Pendant un cours, vous prenez des notes en...",
+      "ordre": 3
+    }
+  },
+  {
+    "model": "quiz.choix",
+    "pk": 7,
+    "fields": {
+      "question": 3,
+      "texte": "Faisant des schemas, des fleches et en utilisant des couleurs",
+      "style": "VISUEL",
+      "lettre": "A"
+    }
+  },
+  {
+    "model": "quiz.choix",
+    "pk": 8,
+    "fields": {
+      "question": 3,
+      "texte": "Ecrivant les mots-cles entendus et en resumant ce qui est dit",
+      "style": "AUDITIF",
+      "lettre": "B"
+    }
+  },
+  {
+    "model": "quiz.choix",
+    "pk": 9,
+    "fields": {
+      "question": 3,
+      "texte": "Notant les exemples pratiques et les exercices a refaire",
+      "style": "KINESTHESIQUE",
+      "lettre": "C"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 4,
+    "fields": {
+      "quiz": 1,
+      "enonce": "Pour memoriser un chapitre, vous aimez...",
+      "ordre": 4
+    }
+  },
+  {
+    "model": "quiz.choix",
+    "pk": 10,
+    "fields": {
+      "question": 4,
+      "texte": "Utiliser des cartes mentales et des infographies",
+      "style": "VISUEL",
+      "lettre": "A"
+    }
+  },
+  {
+    "model": "quiz.choix",
+    "pk": 11,
+    "fields": {
+      "question": 4,
+      "texte": "Lire a voix haute et vous enregistrer",
+      "style": "AUDITIF",
+      "lettre": "B"
+    }
+  },
+  {
+    "model": "quiz.choix",
+    "pk": 12,
+    "fields": {
+      "question": 4,
+      "texte": "Faire des exercices et mini-projets pratiques",
+      "style": "KINESTHESIQUE",
+      "lettre": "C"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 5,
+    "fields": {
+      "quiz": 1,
+      "enonce": "Quand vous utilisez un tutoriel, vous preferez...",
+      "ordre": 5
+    }
+  },
+  {
+    "model": "quiz.choix",
+    "pk": 13,
+    "fields": {
+      "question": 5,
+      "texte": "Regarder la demonstration visuelle complete",
+      "style": "VISUEL",
+      "lettre": "A"
+    }
+  },
+  {
+    "model": "quiz.choix",
+    "pk": 14,
+    "fields": {
+      "question": 5,
+      "texte": "Ecouter l'instructeur expliquer chaque etape",
+      "style": "AUDITIF",
+      "lettre": "B"
+    }
+  },
+  {
+    "model": "quiz.choix",
+    "pk": 15,
+    "fields": {
+      "question": 5,
+      "texte": "Essayer vous-meme en manipulant l'outil",
+      "style": "KINESTHESIQUE",
+      "lettre": "C"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 6,
+    "fields": {
+      "quiz": 1,
+      "enonce": "Si on vous donne une consigne complexe, vous...",
+      "ordre": 6
+    }
+  },
+  {
+    "model": "quiz.choix",
+    "pk": 16,
+    "fields": {
+      "question": 6,
+      "texte": "Demandez un schema ou un plan visuel",
+      "style": "VISUEL",
+      "lettre": "A"
+    }
+  },
+  {
+    "model": "quiz.choix",
+    "pk": 17,
+    "fields": {
+      "question": 6,
+      "texte": "Preferez qu'on vous explique oralement",
+      "style": "AUDITIF",
+      "lettre": "B"
+    }
+  },
+  {
+    "model": "quiz.choix",
+    "pk": 18,
+    "fields": {
+      "question": 6,
+      "texte": "Testez tout de suite avec un exemple concret",
+      "style": "KINESTHESIQUE",
+      "lettre": "C"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 7,
+    "fields": {
+      "quiz": 1,
+      "enonce": "Vous vous souvenez mieux d'un enseignant quand...",
+      "ordre": 7
+    }
+  },
+  {
+    "model": "quiz.choix",
+    "pk": 19,
+    "fields": {
+      "question": 7,
+      "texte": "Ses slides, schemas ou demonstrations visuelles vous marquent",
+      "style": "VISUEL",
+      "lettre": "A"
+    }
+  },
+  {
+    "model": "quiz.choix",
+    "pk": 20,
+    "fields": {
+      "question": 7,
+      "texte": "Sa facon d'expliquer et son ton de voix restent en tete",
+      "style": "AUDITIF",
+      "lettre": "B"
+    }
+  },
+  {
+    "model": "quiz.choix",
+    "pk": 21,
+    "fields": {
+      "question": 7,
+      "texte": "Il vous a fait pratiquer avec des ateliers",
+      "style": "KINESTHESIQUE",
+      "lettre": "C"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 8,
+    "fields": {
+      "quiz": 1,
+      "enonce": "En preparant un examen, votre methode ideale est...",
+      "ordre": 8
+    }
+  },
+  {
+    "model": "quiz.choix",
+    "pk": 22,
+    "fields": {
+      "question": 8,
+      "texte": "Faire des fiches visuelles et des resumes graphiques",
+      "style": "VISUEL",
+      "lettre": "A"
+    }
+  },
+  {
+    "model": "quiz.choix",
+    "pk": 23,
+    "fields": {
+      "question": 8,
+      "texte": "Reciter les notions et discuter avec un camarade",
+      "style": "AUDITIF",
+      "lettre": "B"
+    }
+  },
+  {
+    "model": "quiz.choix",
+    "pk": 24,
+    "fields": {
+      "question": 8,
+      "texte": "Resoudre beaucoup d'exercices pratiques",
+      "style": "KINESTHESIQUE",
+      "lettre": "C"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 9,
+    "fields": {
+      "quiz": 1,
+      "enonce": "Quand vous expliquez une idee a quelqu'un, vous...",
+      "ordre": 9
+    }
+  },
+  {
+    "model": "quiz.choix",
+    "pk": 25,
+    "fields": {
+      "question": 9,
+      "texte": "Dessinez des exemples et utilisez des supports visuels",
+      "style": "VISUEL",
+      "lettre": "A"
+    }
+  },
+  {
+    "model": "quiz.choix",
+    "pk": 26,
+    "fields": {
+      "question": 9,
+      "texte": "Parlez beaucoup et reformulez oralement",
+      "style": "AUDITIF",
+      "lettre": "B"
+    }
+  },
+  {
+    "model": "quiz.choix",
+    "pk": 27,
+    "fields": {
+      "question": 9,
+      "texte": "Montrez en faisant une demonstration concrete",
+      "style": "KINESTHESIQUE",
+      "lettre": "C"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 10,
+    "fields": {
+      "quiz": 1,
+      "enonce": "Dans une formation en ligne, vous preferez...",
+      "ordre": 10
+    }
+  },
+  {
+    "model": "quiz.choix",
+    "pk": 28,
+    "fields": {
+      "question": 10,
+      "texte": "Des videos courtes avec illustrations claires",
+      "style": "VISUEL",
+      "lettre": "A"
+    }
+  },
+  {
+    "model": "quiz.choix",
+    "pk": 29,
+    "fields": {
+      "question": 10,
+      "texte": "Des explications audio et des discussions en direct",
+      "style": "AUDITIF",
+      "lettre": "B"
+    }
+  },
+  {
+    "model": "quiz.choix",
+    "pk": 30,
+    "fields": {
+      "question": 10,
+      "texte": "Des ateliers pratiques avec exercices immediats",
+      "style": "KINESTHESIQUE",
+      "lettre": "C"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 11,
+    "fields": {
+      "quiz": 1,
+      "enonce": "Quand vous etes motive pour apprendre, vous...",
+      "ordre": 11
+    }
+  },
+  {
+    "model": "quiz.choix",
+    "pk": 31,
+    "fields": {
+      "question": 11,
+      "texte": "Visualisez votre objectif avec un plan etape par etape",
+      "style": "VISUEL",
+      "lettre": "A"
+    }
+  },
+  {
+    "model": "quiz.choix",
+    "pk": 32,
+    "fields": {
+      "question": 11,
+      "texte": "Ecoutez des contenus inspires et en parlez autour de vous",
+      "style": "AUDITIF",
+      "lettre": "B"
+    }
+  },
+  {
+    "model": "quiz.choix",
+    "pk": 33,
+    "fields": {
+      "question": 11,
+      "texte": "Passez a l'action avec une tache concrete",
+      "style": "KINESTHESIQUE",
+      "lettre": "C"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 12,
+    "fields": {
+      "quiz": 1,
+      "enonce": "Pour comprendre un concept abstrait, vous...",
+      "ordre": 12
+    }
+  },
+  {
+    "model": "quiz.choix",
+    "pk": 34,
+    "fields": {
+      "question": 12,
+      "texte": "Cherchez un schema, une image ou une analogie visuelle",
+      "style": "VISUEL",
+      "lettre": "A"
+    }
+  },
+  {
+    "model": "quiz.choix",
+    "pk": 35,
+    "fields": {
+      "question": 12,
+      "texte": "Ecoutez une explication detaillee et posez des questions",
+      "style": "AUDITIF",
+      "lettre": "B"
+    }
+  },
+  {
+    "model": "quiz.choix",
+    "pk": 36,
+    "fields": {
+      "question": 12,
+      "texte": "Manipulez un exemple reel pour le tester",
+      "style": "KINESTHESIQUE",
+      "lettre": "C"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 13,
+    "fields": {
+      "quiz": 1,
+      "enonce": "Face a un nouveau logiciel, vous...",
+      "ordre": 13
+    }
+  },
+  {
+    "model": "quiz.choix",
+    "pk": 37,
+    "fields": {
+      "question": 13,
+      "texte": "Explorez l'interface et reperez visuellement les menus",
+      "style": "VISUEL",
+      "lettre": "A"
+    }
+  },
+  {
+    "model": "quiz.choix",
+    "pk": 38,
+    "fields": {
+      "question": 13,
+      "texte": "Regardez une explication orale ou un webinaire",
+      "style": "AUDITIF",
+      "lettre": "B"
+    }
+  },
+  {
+    "model": "quiz.choix",
+    "pk": 39,
+    "fields": {
+      "question": 13,
+      "texte": "Cliquez partout et apprenez en experimentant",
+      "style": "KINESTHESIQUE",
+      "lettre": "C"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 14,
+    "fields": {
+      "quiz": 1,
+      "enonce": "Quand vous relisez vos notes, vous privilegiez...",
+      "ordre": 14
+    }
+  },
+  {
+    "model": "quiz.choix",
+    "pk": 40,
+    "fields": {
+      "question": 14,
+      "texte": "Les surlignages, codes couleur et tableaux",
+      "style": "VISUEL",
+      "lettre": "A"
+    }
+  },
+  {
+    "model": "quiz.choix",
+    "pk": 41,
+    "fields": {
+      "question": 14,
+      "texte": "La reformulation orale des notions importantes",
+      "style": "AUDITIF",
+      "lettre": "B"
+    }
+  },
+  {
+    "model": "quiz.choix",
+    "pk": 42,
+    "fields": {
+      "question": 14,
+      "texte": "Les cas pratiques et entrainements",
+      "style": "KINESTHESIQUE",
+      "lettre": "C"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 15,
+    "fields": {
+      "quiz": 1,
+      "enonce": "Dans un travail de groupe, vous apportez surtout...",
+      "ordre": 15
+    }
+  },
+  {
+    "model": "quiz.choix",
+    "pk": 43,
+    "fields": {
+      "question": 15,
+      "texte": "La structuration visuelle des idees",
+      "style": "VISUEL",
+      "lettre": "A"
+    }
+  },
+  {
+    "model": "quiz.choix",
+    "pk": 44,
+    "fields": {
+      "question": 15,
+      "texte": "La clarte des explications a l'oral",
+      "style": "AUDITIF",
+      "lettre": "B"
+    }
+  },
+  {
+    "model": "quiz.choix",
+    "pk": 45,
+    "fields": {
+      "question": 15,
+      "texte": "La mise en pratique rapide et efficace",
+      "style": "KINESTHESIQUE",
+      "lettre": "C"
+    }
+  }
+]

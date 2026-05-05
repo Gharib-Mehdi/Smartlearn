@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load quiz_extras %}
+{% block title %}Dashboard - SmartLearn{% endblock %}
+{% block content %}
+<section class="sl-container sl-fade-in" style="padding:40px 24px 72px;">
+  <div class="sl-card sl-mb-6">
+    <h2 style="font-size:2rem; font-weight:800;">Bonjour {{ user.username }} ??</h2>
+    <p class="sl-text-muted sl-mt-4">Pret a mieux comprendre votre facon d'apprendre ?</p>
+    <a href="{% url 'quiz_start' %}" class="sl-btn sl-btn-primary sl-btn-md sl-mt-6">Lancer un nouveau quiz</a>
+  </div>
+  {% if last_result %}
+  <div class="sl-card sl-mb-6">
+    <p class="sl-text-muted">Dernier resultat</p>
+    <div class="sl-mt-4" style="display:flex;align-items:center;gap:12px;">
+      <span class="sl-badge {{ last_result.style_dominant|style_badge_class }}">{{ last_result.style_dominant|style_label }}</span>
+      <span>{{ last_result.pct_visuel }}% V / {{ last_result.pct_auditif }}% A / {{ last_result.pct_kinesthesique }}% K</span>
+    </div>
+  </div>
+  {% endif %}
+  <div class="sl-card">
+    <h3 style="font-size:1.25rem; font-weight:700;" class="sl-mb-4">Historique des sessions</h3>
+    <div class="table-responsive">
+      <table class="table table-borderless align-middle" style="color:var(--text-secondary);">
+        <thead><tr><th>Date</th><th>Style dominant</th><th>V</th><th>A</th><th>K</th><th></th></tr></thead>
+        <tbody>
+        {% for s in sessions %}
+          <tr>
+            <td>{{ s.date_fin|date:"d/m/Y H:i" }}</td>
+            <td><span class="sl-badge {{ s.resultat.style_dominant|style_badge_class }}">{{ s.resultat.style_dominant|style_label }}</span></td>
+            <td>{{ s.resultat.pct_visuel }}%</td><td>{{ s.resultat.pct_auditif }}%</td><td>{{ s.resultat.pct_kinesthesique }}%</td>
+            <td><a class="sl-btn sl-btn-ghost sl-btn-sm" href="{% url 'results' s.id %}">Voir</a></td>
+          </tr>
+        {% empty %}
+          <tr><td colspan="6">Aucune session terminee.</td></tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+{% endblock %}
