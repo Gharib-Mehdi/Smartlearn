@@ -42,9 +42,64 @@ def generate_recommendations(session):
         return Recommandation.objects.create(session=session, texte=texte, api_provider="openai")
     except Exception:
         fallback_texts = {
-            "VISUEL": """**Profil Visuel detecte**\n\nVous retenez mieux avec des schemas et contenus visuels.\n\n**Strategies recommandees :**\n- Faites des cartes mentales\n- Regardez des videos explicatives\n- Colorez vos notes\n- Utilisez des flashcards illustrees\n\n**Outils recommandés :** Notion, Canva, Anki.""",
-            "AUDITIF": """**Profil Auditif detecte**\n\nVous retenez mieux en ecoutant et en verbalisant.\n\n**Strategies recommandees :**\n- Ecoutez des podcasts\n- Expliquez a voix haute\n- Enregistrez des resumes audio\n- Participez aux discussions\n\n**Outils recommandés :** Spotify, Audible, Google Recorder.""",
-            "KINESTHESIQUE": """**Profil Kinesthesique detecte**\n\nVous apprenez mieux en pratiquant.\n\n**Strategies recommandees :**\n- Faites des exercices pratiques\n- Construisez des mini-projets\n- Associez mouvement et revision\n- Testez des simulations\n\n**Outils recommandés :** GitHub, laboratoires en ligne, simulations.""",
+            "VISUEL": (
+                "**Profil Visuel detecte**\n\n"
+                "Vous retenez mieux l'information quand elle est presentee "
+                "sous forme d'images, de schemas, de graphiques ou de videos.\n\n"
+                "**Strategies recommandees :**\n"
+                "- Utilisez des mind maps pour organiser vos idees\n"
+                "- Regardez des videos explicatives (YouTube, Khan Academy)\n"
+                "- Colorez et surlignez vos notes\n"
+                "- Transformez vos resumes en schemas visuels\n"
+                "- Utilisez des flashcards avec des images\n\n"
+                "**Outils recommandes :** Notion, Canva pour les schemas, Anki pour les flashcards."
+            ),
+            "AUDITIF": (
+                "**Profil Auditif detecte**\n\n"
+                "Vous retenez mieux l'information quand vous l'entendez "
+                "ou en la verbalisant.\n\n"
+                "**Strategies recommandees :**\n"
+                "- Ecoutez des podcasts et des cours audio\n"
+                "- Expliquez les concepts a voix haute ou a quelqu'un d'autre\n"
+                "- Enregistrez vos propres resumes vocaux\n"
+                "- Participez activement aux discussions de groupe\n"
+                "- Lisez a voix haute lors de vos revisions\n\n"
+                "**Outils recommandes :** Spotify Podcasts, Audible, Google Recorder."
+            ),
+            "KINESTHESIQUE": (
+                "**Profil Kinesthesique detecte**\n\n"
+                "Vous retenez mieux l'information en la pratiquant, "
+                "en l'experimentant concretement.\n\n"
+                "**Strategies recommandees :**\n"
+                "- Faites des exercices pratiques immediatement apres chaque lecon\n"
+                "- Apprenez en faisant des projets concrets\n"
+                "- Prenez des pauses regulieres pour integrer l'information\n"
+                "- Associez le mouvement a l'apprentissage\n"
+                "- Creez des maquettes ou des prototypes\n\n"
+                "**Outils recommandes :** GitHub pour les projets, laboratoires en ligne."
+            ),
         }
-        texte = fallback_texts.get(resultat.style_dominant, "Continuez a explorer votre style d'apprentissage.")
+        fallback_equilibre = (
+            "Profil Multimodal detecte\n\n"
+            "Felicitations ! Votre profil d'apprentissage est parfaitement equilibre "
+            "entre les styles Visuel, Auditif et Kinesthesique. "
+            "C'est une caracteristique rare et precieuse : vous etes capable de vous adapter "
+            "a n'importe quelle methode d'enseignement.\n\n"
+            "Ce que cela signifie :\n"
+            "- Vous pouvez apprendre aussi bien par des videos que des podcasts ou des exercices\n"
+            "- Vous vous adaptez facilement a differents formateurs et environnements\n"
+            "- Vous pouvez choisir votre methode selon votre humeur ou le sujet\n\n"
+            "Strategies recommandees :\n"
+            "- Variez vos methodes pour maintenir l'engagement\n"
+            "- Combinez : lisez un chapitre, ecoutez un podcast, puis faites un exercice\n"
+            "- Profitez de cette flexibilite pour experimenter de nouvelles approches\n\n"
+            "Outils recommandes : Notion (visuel), Anki (pratique), Audible (auditif)."
+        )
+        if hasattr(resultat, "profil_type") and resultat.profil_type == "EQUILIBRE":
+            texte = fallback_equilibre
+        else:
+            texte = fallback_texts.get(
+                resultat.style_dominant,
+                "Continuez a explorer votre style d'apprentissage !",
+            )
         return Recommandation.objects.create(session=session, texte=texte, api_provider="fallback")

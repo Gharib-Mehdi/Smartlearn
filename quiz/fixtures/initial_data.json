@@ -478,120 +478,123 @@
     }
   },
   {
-    "model": "quiz.question",
-    "pk": 13,
-    "fields": {
-      "quiz": 1,
-      "enonce": "Face a un nouveau logiciel, vous...",
-      "ordre": 13
-    }
-  },
-  {
     "model": "quiz.choix",
     "pk": 37,
     "fields": {
-      "question": 13,
-      "texte": "Explorez l'interface et reperez visuellement les menus",
-      "style": "VISUEL",
-      "lettre": "A"
+      "question": 1,
+      "texte": "Aucune de ces reponses ne me correspond vraiment",
+      "style": "NEUTRE",
+      "lettre": "D"
     }
   },
   {
     "model": "quiz.choix",
     "pk": 38,
     "fields": {
-      "question": 13,
-      "texte": "Regardez une explication orale ou un webinaire",
-      "style": "AUDITIF",
-      "lettre": "B"
+      "question": 2,
+      "texte": "Aucune de ces reponses ne me correspond vraiment",
+      "style": "NEUTRE",
+      "lettre": "D"
     }
   },
   {
     "model": "quiz.choix",
     "pk": 39,
     "fields": {
-      "question": 13,
-      "texte": "Cliquez partout et apprenez en experimentant",
-      "style": "KINESTHESIQUE",
-      "lettre": "C"
-    }
-  },
-  {
-    "model": "quiz.question",
-    "pk": 14,
-    "fields": {
-      "quiz": 1,
-      "enonce": "Quand vous relisez vos notes, vous privilegiez...",
-      "ordre": 14
+      "question": 3,
+      "texte": "Aucune de ces reponses ne me correspond vraiment",
+      "style": "NEUTRE",
+      "lettre": "D"
     }
   },
   {
     "model": "quiz.choix",
     "pk": 40,
     "fields": {
-      "question": 14,
-      "texte": "Les surlignages, codes couleur et tableaux",
-      "style": "VISUEL",
-      "lettre": "A"
+      "question": 4,
+      "texte": "Aucune de ces reponses ne me correspond vraiment",
+      "style": "NEUTRE",
+      "lettre": "D"
     }
   },
   {
     "model": "quiz.choix",
     "pk": 41,
     "fields": {
-      "question": 14,
-      "texte": "La reformulation orale des notions importantes",
-      "style": "AUDITIF",
-      "lettre": "B"
+      "question": 5,
+      "texte": "Aucune de ces reponses ne me correspond vraiment",
+      "style": "NEUTRE",
+      "lettre": "D"
     }
   },
   {
     "model": "quiz.choix",
     "pk": 42,
     "fields": {
-      "question": 14,
-      "texte": "Les cas pratiques et entrainements",
-      "style": "KINESTHESIQUE",
-      "lettre": "C"
-    }
-  },
-  {
-    "model": "quiz.question",
-    "pk": 15,
-    "fields": {
-      "quiz": 1,
-      "enonce": "Dans un travail de groupe, vous apportez surtout...",
-      "ordre": 15
+      "question": 6,
+      "texte": "Aucune de ces reponses ne me correspond vraiment",
+      "style": "NEUTRE",
+      "lettre": "D"
     }
   },
   {
     "model": "quiz.choix",
     "pk": 43,
     "fields": {
-      "question": 15,
-      "texte": "La structuration visuelle des idees",
-      "style": "VISUEL",
-      "lettre": "A"
+      "question": 7,
+      "texte": "Aucune de ces reponses ne me correspond vraiment",
+      "style": "NEUTRE",
+      "lettre": "D"
     }
   },
   {
     "model": "quiz.choix",
     "pk": 44,
     "fields": {
-      "question": 15,
-      "texte": "La clarte des explications a l'oral",
-      "style": "AUDITIF",
-      "lettre": "B"
+      "question": 8,
+      "texte": "Aucune de ces reponses ne me correspond vraiment",
+      "style": "NEUTRE",
+      "lettre": "D"
     }
   },
   {
     "model": "quiz.choix",
     "pk": 45,
     "fields": {
-      "question": 15,
-      "texte": "La mise en pratique rapide et efficace",
-      "style": "KINESTHESIQUE",
-      "lettre": "C"
+      "question": 9,
+      "texte": "Aucune de ces reponses ne me correspond vraiment",
+      "style": "NEUTRE",
+      "lettre": "D"
+    }
+  },
+  {
+    "model": "quiz.choix",
+    "pk": 46,
+    "fields": {
+      "question": 10,
+      "texte": "Aucune de ces reponses ne me correspond vraiment",
+      "style": "NEUTRE",
+      "lettre": "D"
+    }
+  },
+  {
+    "model": "quiz.choix",
+    "pk": 47,
+    "fields": {
+      "question": 11,
+      "texte": "Aucune de ces reponses ne me correspond vraiment",
+      "style": "NEUTRE",
+      "lettre": "D"
+    }
+  },
+  {
+    "model": "quiz.choix",
+    "pk": 48,
+    "fields": {
+      "question": 12,
+      "texte": "Aucune de ces reponses ne me correspond vraiment",
+      "style": "NEUTRE",
+      "lettre": "D"
     }
   }
 ]

@@ -15,6 +15,7 @@
         <div class="sl-container">
             <a href="/" class="sl-logo">Smart<span>Learn</span></a>
             <div class="sl-nav-actions">
+                <a href="{% url 'ressources' %}" class="sl-btn sl-btn-ghost sl-btn-sm">[Ressources] Ressources</a>
                 {% if user.is_authenticated %}
                     <span class="sl-nav-username">{{ user.username }}</span>
                     <a href="/dashboard/" class="sl-btn sl-btn-ghost sl-btn-sm">Dashboard</a>
@@ -27,8 +28,8 @@
                     <a href="/accounts/register/" class="sl-btn sl-btn-primary sl-btn-sm">S'inscrire</a>
                 {% endif %}
                 <button class="sl-theme-toggle" id="themeToggle" aria-label="Changer le theme">
-                    <span class="theme-icon-light">☀️</span>
-                    <span class="theme-icon-dark">🌙</span>
+                    <span class="theme-icon-light">&#9728;&#65039;</span>
+                    <span class="theme-icon-dark">&#127769;</span>
                 </button>
             </div>
         </div>

@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title %}Modifier la question - Admin SmartLearn{% endblock %}
+{% block content %}
+<div class="sl-auth-container" style="padding-top:60px;">
+  <div class="sl-card">
+    <div style="display:flex; align-items:center; gap:12px; margin-bottom:24px;">
+      <a href="{% url 'admin_dashboard' %}" class="sl-btn sl-btn-ghost sl-btn-sm">&larr; Retour</a>
+      <h2 style="font-size:1.125rem; font-weight:700; color:var(--text-primary); margin:0;">Modifier la question Q{{ question.ordre }}</h2>
+    </div>
+    <form method="post">
+      {% csrf_token %}
+      <div class="sl-form-group"><label class="sl-label">Enonce</label><textarea name="enonce" class="sl-input" rows="3">{{ question.enonce }}</textarea></div>
+      {% for choix in question.choix.all %}
+      <div style="border:1px solid var(--border-default); border-radius:var(--radius-md); padding:16px; margin-bottom:12px;">
+        <div style="font-size:0.875rem; font-weight:600; color:var(--text-secondary); margin-bottom:10px;">Choix {{ choix.lettre }}</div>
+        <div class="sl-form-group" style="margin-bottom:10px;"><label class="sl-label">Texte</label><input type="text" name="choix_{{ choix.lettre }}" class="sl-input" value="{{ choix.texte }}"></div>
+        <div class="sl-form-group" style="margin-bottom:0;"><label class="sl-label">Style VAK</label><select name="style_{{ choix.lettre }}" class="sl-input"><option value="VISUEL" {% if choix.style == 'VISUEL' %}selected{% endif %}>V Visuel</option><option value="AUDITIF" {% if choix.style == 'AUDITIF' %}selected{% endif %}>A Auditif</option><option value="KINESTHESIQUE" {% if choix.style == 'KINESTHESIQUE' %}selected{% endif %}>K Kinesthesique</option><option value="NEUTRE" {% if choix.style == 'NEUTRE' %}selected{% endif %}>- Neutre</option></select></div>
+      </div>
+      {% endfor %}
+      <button type="submit" class="sl-btn sl-btn-primary sl-btn-lg" style="margin-top:8px;">Enregistrer les modifications</button>
+    </form>
+  </div>
+</div>
+{% endblock %}

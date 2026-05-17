@@ -6,6 +6,7 @@ class StyleEnum(models.TextChoices):
     VISUEL = "VISUEL", "Visuel"
     AUDITIF = "AUDITIF", "Auditif"
     KINESTHESIQUE = "KINESTHESIQUE", "Kinesthesique"
+    NEUTRE = "NEUTRE", "Neutre"
 
 
 class Quiz(models.Model):
@@ -73,6 +74,16 @@ class Resultat(models.Model):
     pct_visuel = models.FloatField(default=0)
     pct_auditif = models.FloatField(default=0)
     pct_kinesthesique = models.FloatField(default=0)
+    neutral_count = models.IntegerField(default=0)
+    profil_type = models.CharField(
+        max_length=20,
+        default="DOMINANT",
+        choices=[
+            ("DOMINANT", "Style dominant clair"),
+            ("MIXTE", "Profil mixte"),
+            ("EQUILIBRE", "Profil equilibre"),
+        ],
+    )
     created_at = models.DateTimeField(auto_now_add=True)
 
     def calculer(self):
@@ -81,13 +92,53 @@ class Resultat(models.Model):
             self.pct_visuel = round(self.score_visuel / total * 100, 1)
             self.pct_auditif = round(self.score_auditif / total * 100, 1)
             self.pct_kinesthesique = round(self.score_kinesthesique / total * 100, 1)
+        else:
+            self.pct_visuel = self.pct_auditif = self.pct_kinesthesique = 0
         scores = {
-            "VISUEL": self.score_visuel,
-            "AUDITIF": self.score_auditif,
-            "KINESTHESIQUE": self.score_kinesthesique,
+            "VISUEL": self.pct_visuel,
+            "AUDITIF": self.pct_auditif,
+            "KINESTHESIQUE": self.pct_kinesthesique,
         }
-        self.style_dominant = max(scores, key=scores.get)
+        sorted_styles = sorted(scores.items(), key=lambda x: x[1], reverse=True)
+        first_score = sorted_styles[0][1]
+        second_score = sorted_styles[1][1]
+        ecart = first_score - second_score
+        self.style_dominant = sorted_styles[0][0]
+        if ecart <= 2:
+            self.profil_type = "EQUILIBRE"
+        elif ecart <= 15:
+            self.profil_type = "MIXTE"
+        else:
+            self.profil_type = "DOMINANT"
         self.save()
+
+    @property
+    def style_secondaire(self):
+        scores = {
+            "VISUEL": self.pct_visuel,
+            "AUDITIF": self.pct_auditif,
+            "KINESTHESIQUE": self.pct_kinesthesique,
+        }
+        sorted_styles = sorted(scores.items(), key=lambda x: x[1], reverse=True)
+        return sorted_styles[1][0]
+
+    @property
+    def label_style(self):
+        labels = {
+            "VISUEL": "Visuel",
+            "AUDITIF": "Auditif",
+            "KINESTHESIQUE": "Kinesthesique",
+        }
+        return labels.get(self.style_dominant, self.style_dominant)
+
+    @property
+    def label_style_secondaire(self):
+        labels = {
+            "VISUEL": "Visuel",
+            "AUDITIF": "Auditif",
+            "KINESTHESIQUE": "Kinesthesique",
+        }
+        return labels.get(self.style_secondaire, self.style_secondaire)
 
 
 class Recommandation(models.Model):

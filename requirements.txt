@@ -1,5 +1,6 @@
 django>=4.2
 openai>=1.0.0
+gunicorn
 # anthropic>=0.20.0
 python-decouple
 whitenoise

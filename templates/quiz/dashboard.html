@@ -4,7 +4,7 @@
 {% block content %}
 <section class="sl-container sl-fade-in" style="padding:40px 24px 72px;">
   <div class="sl-card sl-mb-6">
-    <h2 style="font-size:2rem; font-weight:800;">Bonjour {{ user.username }} ??</h2>
+    <h2 style="font-size:2rem; font-weight:800;">Bonjour {{ user.username }}</h2>
     <p class="sl-text-muted sl-mt-4">Pret a mieux comprendre votre facon d'apprendre ?</p>
     <a href="{% url 'quiz_start' %}" class="sl-btn sl-btn-primary sl-btn-md sl-mt-6">Lancer un nouveau quiz</a>
   </div>
@@ -17,6 +17,13 @@
     </div>
   </div>
   {% endif %}
+  {% if has_evolution %}
+  <div class="sl-card sl-fade-in" style="margin-bottom: 24px;">
+    <h3 style="font-size:1rem; font-weight:600; color:var(--text-primary); margin-bottom:6px;">Evolution de votre profil</h3>
+    <p style="color:var(--text-secondary); font-size:0.875rem; margin-bottom:20px;">Votre style d'apprentissage au fil de vos {{ sessions.count }} sessions</p>
+    <canvas id="evolutionChart" height="120"></canvas>
+  </div>
+  {% endif %}
   <div class="sl-card">
     <h3 style="font-size:1.25rem; font-weight:700;" class="sl-mb-4">Historique des sessions</h3>
     <div class="table-responsive">
@@ -26,7 +33,15 @@
         {% for s in sessions %}
           <tr>
             <td>{{ s.date_fin|date:"d/m/Y H:i" }}</td>
-            <td><span class="sl-badge {{ s.resultat.style_dominant|style_badge_class }}">{{ s.resultat.style_dominant|style_label }}</span></td>
+            <td>
+              {% if s.resultat.profil_type == 'EQUILIBRE' %}
+                <span class="sl-badge sl-badge-accent">Equilibre</span>
+              {% elif s.resultat.profil_type == 'MIXTE' %}
+                <span class="sl-badge {{ s.resultat.style_dominant|style_badge_class }}">{{ s.resultat.label_style }} ~</span>
+              {% else %}
+                <span class="sl-badge {{ s.resultat.style_dominant|style_badge_class }}">{{ s.resultat.label_style }}</span>
+              {% endif %}
+            </td>
             <td>{{ s.resultat.pct_visuel }}%</td><td>{{ s.resultat.pct_auditif }}%</td><td>{{ s.resultat.pct_kinesthesique }}%</td>
             <td><a class="sl-btn sl-btn-ghost sl-btn-sm" href="{% url 'results' s.id %}">Voir</a></td>
           </tr>
@@ -38,4 +53,30 @@
     </div>
   </div>
 </section>
+{% endblock %}
+{% block extra_js %}
+{% if has_evolution %}
+<script>
+const evolutionData = {{ evolution_json|safe }};
+new Chart(document.getElementById('evolutionChart'), {
+  type: 'line',
+  data: {
+    labels: evolutionData.map(d => d.date),
+    datasets: [
+      { label: 'V Visuel', data: evolutionData.map(d => d.visuel), borderColor: 'rgba(6, 182, 212, 0.9)', backgroundColor: 'rgba(6, 182, 212, 0.1)', tension: 0.4, fill: false, pointRadius: 5, pointHoverRadius: 7 },
+      { label: 'A Auditif', data: evolutionData.map(d => d.auditif), borderColor: 'rgba(168, 85, 247, 0.9)', backgroundColor: 'rgba(168, 85, 247, 0.1)', tension: 0.4, fill: false, pointRadius: 5, pointHoverRadius: 7 },
+      { label: 'K Kinesthesique', data: evolutionData.map(d => d.kinesthesique), borderColor: 'rgba(20, 184, 166, 0.9)', backgroundColor: 'rgba(20, 184, 166, 0.1)', tension: 0.4, fill: false, pointRadius: 5, pointHoverRadius: 7 }
+    ]
+  },
+  options: {
+    responsive: true,
+    plugins: { legend: { labels: { color: '#94A3B8', font: { family: 'Inter', size: 12 } } } },
+    scales: {
+      x: { ticks: { color: '#94A3B8' }, grid: { color: 'rgba(148,163,184,0.08)' } },
+      y: { ticks: { color: '#94A3B8', callback: v => v + '%' }, grid: { color: 'rgba(148,163,184,0.08)' }, min: 0, max: 100 }
+    }
+  }
+});
+</script>
+{% endif %}
 {% endblock %}

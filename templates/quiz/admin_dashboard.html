@@ -1,0 +1,116 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Admin Dashboard - SmartLearn{% endblock %}
+
+{% block content %}
+<div class="sl-container" style="padding-top: 40px; padding-bottom: 60px;">
+  <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:32px;">
+    <div>
+      <div class="sl-badge sl-badge-accent" style="margin-bottom:10px;">[Admin] Administration</div>
+      <h1 style="font-size:1.75rem; font-weight:800; color:var(--text-primary); margin:0;">Tableau de bord Admin</h1>
+      <p style="color:var(--text-secondary); margin-top:6px; font-size:0.9375rem;">Vue globale de SmartLearn</p>
+    </div>
+    <a href="/" class="sl-btn sl-btn-ghost sl-btn-sm">&larr; Accueil</a>
+  </div>
+
+  <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-bottom:32px;">
+    <div class="sl-card" style="text-align:center; padding:28px 20px;"><div style="font-size:2.5rem; font-weight:800; color:var(--accent-primary);">{{ total_users }}</div><div style="color:var(--text-secondary); font-size:0.875rem; margin-top:6px;">Utilisateurs inscrits</div></div>
+    <div class="sl-card" style="text-align:center; padding:28px 20px;"><div style="font-size:2.5rem; font-weight:800; color:var(--accent-secondary);">{{ total_sessions }}</div><div style="color:var(--text-secondary); font-size:0.875rem; margin-top:6px;">Quiz completes</div></div>
+    <div class="sl-card" style="text-align:center; padding:28px 20px;"><div style="font-size:2.5rem; font-weight:800; color:var(--accent-teal);">{% if styles_data %}{{ styles_data.0.style }}{% else %}-{% endif %}</div><div style="color:var(--text-secondary); font-size:0.875rem; margin-top:6px;">Style dominant global</div></div>
+  </div>
+
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px; margin-bottom:32px;">
+    <div class="sl-card"><h3 style="font-size:1rem; font-weight:600; color:var(--text-primary); margin-bottom:20px;">Distribution des styles VAK</h3><canvas id="stylesChart" height="200"></canvas></div>
+    <div class="sl-card"><h3 style="font-size:1rem; font-weight:600; color:var(--text-primary); margin-bottom:20px;">Quiz completes (4 dernieres semaines)</h3><canvas id="weeklyChart" height="200"></canvas></div>
+  </div>
+
+  <div class="sl-card" style="margin-bottom:32px;">
+    <h3 style="font-size:1rem; font-weight:600; color:var(--text-primary); margin-bottom:20px;">Sessions recentes</h3>
+    {% if recent_sessions %}
+    <div style="overflow-x:auto;">
+      <table style="width:100%; border-collapse:collapse; font-size:0.875rem;">
+        <thead><tr style="border-bottom:1px solid var(--border-default);"><th style="text-align:left; padding:10px 12px; color:var(--text-secondary); font-weight:500;">Utilisateur</th><th style="text-align:left; padding:10px 12px; color:var(--text-secondary); font-weight:500;">Date</th><th style="text-align:left; padding:10px 12px; color:var(--text-secondary); font-weight:500;">Style dominant</th><th style="text-align:center; padding:10px 12px; color:var(--text-secondary); font-weight:500;">V%</th><th style="text-align:center; padding:10px 12px; color:var(--text-secondary); font-weight:500;">A%</th><th style="text-align:center; padding:10px 12px; color:var(--text-secondary); font-weight:500;">K%</th></tr></thead>
+        <tbody>
+          {% for session in recent_sessions %}
+          <tr style="border-bottom:1px solid var(--border-default);">
+            <td style="padding:12px; color:var(--text-primary); font-weight:500;">{{ session.utilisateur.username }}</td>
+            <td style="padding:12px; color:var(--text-secondary);">{{ session.date_fin|date:"d/m/Y H:i" }}</td>
+            <td style="padding:12px;"><span class="sl-badge sl-badge-{{ session.resultat.style_dominant|lower }}">{{ session.resultat.style_dominant }}</span></td>
+            <td style="padding:12px; text-align:center; color:var(--color-visuel);">{{ session.resultat.pct_visuel }}%</td>
+            <td style="padding:12px; text-align:center; color:var(--color-auditif);">{{ session.resultat.pct_auditif }}%</td>
+            <td style="padding:12px; text-align:center; color:var(--color-kinesthesique);">{{ session.resultat.pct_kinesthesique }}%</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% else %}<p style="color:var(--text-muted); text-align:center; padding:24px 0;">Aucune session completee pour le moment.</p>{% endif %}
+  </div>
+
+  <div class="sl-card">
+    <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:24px;">
+      <h3 style="font-size:1rem; font-weight:600; color:var(--text-primary); margin:0;">Gestion des questions ({{ questions|length }} questions)</h3>
+      <button class="sl-btn sl-btn-primary sl-btn-sm" onclick="document.getElementById('modalAddQuestion').style.display='flex'">+ Ajouter une question</button>
+    </div>
+
+    {% for question in questions %}
+    <div style="border:1px solid var(--border-default); border-radius:var(--radius-md); padding:16px; margin-bottom:12px; background:var(--bg-secondary);">
+      <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:16px;">
+        <div style="flex:1;">
+          <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;"><span style="font-size:0.75rem; font-weight:700; color:var(--accent-primary); background:var(--accent-primary-light); padding:2px 8px; border-radius:var(--radius-full);">Q{{ question.ordre }}</span></div>
+          <p style="color:var(--text-primary); font-size:0.9375rem; margin-bottom:12px;">{{ question.enonce }}</p>
+          <div style="display:flex; flex-wrap:wrap; gap:8px;">
+            {% for choix in question.choix.all %}
+            <span style="font-size:0.8125rem; padding:4px 10px; border-radius:var(--radius-full); {% if choix.style == 'VISUEL' %}background:var(--color-visuel-bg); color:var(--color-visuel);{% elif choix.style == 'AUDITIF' %}background:var(--color-auditif-bg); color:var(--color-auditif);{% elif choix.style == 'KINESTHESIQUE' %}background:var(--color-kinesthesique-bg); color:var(--color-kinesthesique);{% else %}background:rgba(148,163,184,0.1); color:var(--text-muted);{% endif %}">{{ choix.lettre }}: {{ choix.texte|truncatechars:35 }}</span>
+            {% endfor %}
+          </div>
+        </div>
+        <div style="display:flex; gap:8px; flex-shrink:0;">
+          <a href="{% url 'admin_question_edit' question.id %}" class="sl-btn sl-btn-outline sl-btn-sm">[Modifier] Modifier</a>
+          <form method="post" action="{% url 'admin_question_delete' question.id %}" onsubmit="return confirm('Supprimer cette question ?')">{% csrf_token %}<button type="submit" class="sl-btn sl-btn-sm" style="background:rgba(239,68,68,0.1); color:var(--color-error); border:1px solid rgba(239,68,68,0.25);">[Suppr.] Supprimer</button></form>
+        </div>
+      </div>
+    </div>
+    {% empty %}<p style="color:var(--text-muted); text-align:center; padding:24px 0;">Aucune question dans le quiz actif.</p>{% endfor %}
+  </div>
+</div>
+
+<div id="modalAddQuestion" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.7); z-index:200; align-items:center; justify-content:center; padding:24px;">
+  <div style="background:var(--bg-card); border-radius:var(--radius-xl); padding:32px; width:100%; max-width:600px; max-height:90vh; overflow-y:auto; border:1px solid var(--border-default);">
+    <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:24px;"><h3 style="font-size:1.125rem; font-weight:700; color:var(--text-primary); margin:0;">Nouvelle question</h3><button onclick="document.getElementById('modalAddQuestion').style.display='none'" style="background:none; border:none; color:var(--text-muted); font-size:1.5rem; cursor:pointer;">x</button></div>
+    <form method="post" action="{% url 'admin_question_add' %}">
+      {% csrf_token %}
+      <div class="sl-form-group"><label class="sl-label">Enonce de la question</label><textarea name="enonce" class="sl-input" rows="3" placeholder="Ex: Quand vous lisez un texte difficile, vous preferez..."></textarea></div>
+      {% for lettre, style_label, style_val in choices_config %}
+      <div style="border:1px solid var(--border-default); border-radius:var(--radius-md); padding:16px; margin-bottom:12px;">
+        <div style="font-size:0.875rem; font-weight:600; color:var(--text-secondary); margin-bottom:10px;">Choix {{ lettre }}</div>
+        <div class="sl-form-group" style="margin-bottom:10px;"><label class="sl-label">Texte du choix</label><input type="text" name="choix_{{ lettre }}" class="sl-input" placeholder="Texte du choix {{ lettre }}"></div>
+        <div class="sl-form-group" style="margin-bottom:0;"><label class="sl-label">Style VAK</label><select name="style_{{ lettre }}" class="sl-input"><option value="VISUEL" {% if lettre == 'A' %}selected{% endif %}>V Visuel</option><option value="AUDITIF" {% if lettre == 'B' %}selected{% endif %}>A Auditif</option><option value="KINESTHESIQUE" {% if lettre == 'C' %}selected{% endif %}>K Kinesthesique</option><option value="NEUTRE" {% if lettre == 'D' %}selected{% endif %}>- Neutre (Autre)</option></select></div>
+      </div>
+      {% endfor %}
+      <div style="display:flex; gap:12px; margin-top:24px;"><button type="submit" class="sl-btn sl-btn-primary" style="flex:1; padding:14px;">Ajouter la question</button><button type="button" onclick="document.getElementById('modalAddQuestion').style.display='none'" class="sl-btn sl-btn-ghost" style="padding:14px 20px;">Annuler</button></div>
+    </form>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+const stylesData = {{ styles_json|safe }};
+const weeklyData = {{ weekly_json|safe }};
+const styleColors = { VISUEL: 'rgba(6, 182, 212, 0.8)', AUDITIF: 'rgba(168, 85, 247, 0.8)', KINESTHESIQUE: 'rgba(20, 184, 166, 0.8)' };
+if (stylesData.length > 0) {
+  new Chart(document.getElementById('stylesChart'), {
+    type: 'doughnut',
+    data: { labels: stylesData.map(d => d.style), datasets: [{ data: stylesData.map(d => d.count), backgroundColor: stylesData.map(d => styleColors[d.style] || 'rgba(148,163,184,0.5)'), borderWidth: 0 }] },
+    options: { responsive: true, plugins: { legend: { labels: { color: '#94A3B8', font: { family: 'Inter' } } }, tooltip: { callbacks: { label: (ctx) => ` ${ctx.label}: ${ctx.raw} (${stylesData[ctx.dataIndex].pct}%)` } } } }
+  });
+}
+new Chart(document.getElementById('weeklyChart'), {
+  type: 'bar',
+  data: { labels: weeklyData.map(d => d.week), datasets: [{ label: 'Quiz completes', data: weeklyData.map(d => d.count), backgroundColor: 'rgba(168, 85, 247, 0.6)', borderRadius: 6 }] },
+  options: { responsive: true, plugins: { legend: { display: false } }, scales: { x: { ticks: { color: '#94A3B8' }, grid: { color: 'rgba(148,163,184,0.08)' } }, y: { ticks: { color: '#94A3B8', stepSize: 1 }, grid: { color: 'rgba(148,163,184,0.08)' }, beginAtZero: true } } }
+});
+</script>
+{% endblock %}

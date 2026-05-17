@@ -3,12 +3,39 @@
 {% block title %}Resultats - SmartLearn{% endblock %}
 {% block content %}
 <section class="sl-quiz-container sl-fade-in" style="padding:42px 24px 72px;">
-  <div class="sl-result-dominant sl-card">
-    <div class="result-icon">{% if resultat.style_dominant == 'VISUEL' %}???{% elif resultat.style_dominant == 'AUDITIF' %}??{% else %}?{% endif %}</div>
-    <div class="result-label">Style dominant detecte</div>
-    <div class="result-style">{{ resultat.style_dominant|style_label }}</div>
-    <div class="result-score">{{ resultat.pct_visuel }}% V / {{ resultat.pct_auditif }}% A / {{ resultat.pct_kinesthesique }}% K</div>
+  <div class="sl-result-dominant sl-fade-in"
+       style="background: {% if resultat.profil_type == 'EQUILIBRE' %}linear-gradient(135deg, rgba(6,182,212,0.12), rgba(168,85,247,0.12), rgba(20,184,166,0.12)){% elif resultat.profil_type == 'MIXTE' %}linear-gradient(135deg, var(--color-{{ resultat.style_dominant|lower }}-bg, rgba(168,85,247,0.12)), transparent){% else %}var(--color-{{ resultat.style_dominant|lower }}-bg, rgba(168,85,247,0.12)){% endif %}; border: 2px solid {% if resultat.profil_type == 'EQUILIBRE' %}rgba(168,85,247,0.4){% else %}var(--color-{{ resultat.style_dominant|lower }}, var(--accent-primary)){% endif %};">
+    {% if resultat.profil_type == 'EQUILIBRE' %}
+      <div class="result-label">PROFIL DETECTE</div>
+      <div class="result-style" style="color: var(--accent-primary);">Profil Equilibre</div>
+      <div class="result-score" style="margin-top: 12px; color: var(--text-secondary);">Visuel, Auditif et Kinesthesique en equilibre parfait</div>
+      <div style="display:flex; justify-content:center; gap:10px; margin-top:16px; flex-wrap:wrap;">
+        <span class="sl-badge sl-badge-visuel">Visuel {{ resultat.pct_visuel }}%</span>
+        <span class="sl-badge sl-badge-auditif">Auditif {{ resultat.pct_auditif }}%</span>
+        <span class="sl-badge sl-badge-kinesthesique">Kin. {{ resultat.pct_kinesthesique }}%</span>
+      </div>
+    {% elif resultat.profil_type == 'MIXTE' %}
+      <div class="result-label">STYLE PRINCIPAL</div>
+      <div class="result-style" style="color: var(--color-{{ resultat.style_dominant|lower }}, var(--accent-primary));">{{ resultat.label_style }}</div>
+      <div class="result-score">{{ resultat.pct_visuel }}% V / {{ resultat.pct_auditif }}% A / {{ resultat.pct_kinesthesique }}% K</div>
+      <div style="margin-top:14px; padding:10px 18px; background:rgba(148,163,184,0.08); border-radius:var(--radius-md); display:inline-block;">
+        <span style="color:var(--text-secondary); font-size:0.875rem;">Tendance secondaire notable : <strong style="color:var(--color-{{ resultat.style_secondaire|lower }}, var(--accent-secondary));">{{ resultat.label_style_secondaire }}</strong></span>
+      </div>
+    {% else %}
+      <div class="result-label">STYLE DOMINANT DETECTE</div>
+      <div class="result-style" style="color: var(--color-{{ resultat.style_dominant|lower }}, var(--accent-primary));">{{ resultat.label_style }}</div>
+      <div class="result-score">{{ resultat.pct_visuel }}% V / {{ resultat.pct_auditif }}% A / {{ resultat.pct_kinesthesique }}% K</div>
+    {% endif %}
   </div>
+  {% if resultat.neutral_count >= 3 %}
+  <div class="sl-alert-mixed sl-fade-in" style="margin-bottom: 24px;">
+    <span class="mixed-icon">~</span>
+    <div>
+      <strong>Profil mixte detecte</strong>
+      <p>Vous avez choisi "Autre" pour {{ resultat.neutral_count }} questions. Votre style d'apprentissage est probablement une combinaison unique - les recommandations ci-dessous tiennent compte de cette flexibilite.</p>
+    </div>
+  </div>
+  {% endif %}
   <div class="sl-card sl-mt-6">
     <h3 style="font-size:1.25rem;">Detail de vos scores</h3>
     <canvas id="scoresChart" height="140" class="sl-mt-4"></canvas>
@@ -19,10 +46,12 @@
     <div class="sl-card"><span class="sl-badge sl-badge-kinesthesique">Kinesthesique</span><h4 class="sl-mt-4">{{ resultat.pct_kinesthesique }}%</h4></div>
   </div>
   <div class="sl-recommendation-card sl-mt-6">
-    <div class="rec-header"><span>?</span><span class="rec-title">Recommandations personnalisees par IA</span></div>
-    <div class="rec-body">{{ recommandation.texte }}</div>
+    <div class="rec-header"><span>[IA]</span><span class="rec-title">Recommandations personnalisees par IA</span></div>
+    <div class="rec-body">{{ recommandation.texte|linebreaksbr }}</div>
   </div>
   <div class="sl-mt-6" style="display:flex;gap:12px;flex-wrap:wrap;">
+    <button class="sl-btn sl-btn-outline sl-btn-sm" id="shareBtn" onclick="copyProfile()">[Copier] Copier mon profil</button>
+    <a href="{% url 'ressources' %}?style={{ resultat.style_dominant|lower }}" class="sl-btn sl-btn-outline sl-btn-md">Ressources associees</a>
     <a href="{% url 'quiz_start' %}" class="sl-btn sl-btn-outline sl-btn-md">Refaire le quiz</a>
     <a href="{% url 'dashboard' %}" class="sl-btn sl-btn-ghost sl-btn-md">Retour au dashboard</a>
   </div>
@@ -48,6 +77,39 @@
     options: {
       scales: { r: { min: 0, max: 100, ticks: { color: '#94A3B8' }, grid: { color: 'rgba(148,163,184,0.12)' }, pointLabels: { color: '#94A3B8' } } },
       plugins: { legend: { labels: { color: '#94A3B8' } } }
+    }
+  });
+
+  function copyProfile() {
+    const style = "{{ resultat.style_dominant }}";
+    const pctV = "{{ resultat.pct_visuel }}";
+    const pctA = "{{ resultat.pct_auditif }}";
+    const pctK = "{{ resultat.pct_kinesthesique }}";
+    const stylePrefix = { VISUEL: "V", AUDITIF: "A", KINESTHESIQUE: "K" };
+    const text = `Mon profil d'apprentissage SmartLearn\n\nStyle dominant : ${stylePrefix[style] || "-"} ${style}\n\nScores VAK :\n- Visuel : ${pctV}%\n- Auditif : ${pctA}%\n- Kinesthesique : ${pctK}%\n\nDecouvrez votre style sur SmartLearn !`;
+    navigator.clipboard.writeText(text).then(() => {
+      const btn = document.getElementById("shareBtn");
+      const original = btn.innerHTML;
+      btn.innerHTML = "[OK] Copie !";
+      btn.style.color = "var(--color-success)";
+      btn.style.borderColor = "var(--color-success)";
+      setTimeout(() => {
+        btn.innerHTML = original;
+        btn.style.color = "";
+        btn.style.borderColor = "";
+      }, 2500);
+    }).catch(() => {
+      alert("Impossible de copier automatiquement. Voici votre profil :\n\n" + text);
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    const recBody = document.querySelector('.rec-body');
+    if (recBody) {
+      let html = recBody.innerHTML;
+      html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+      html = html.replace(/\*(.+?)\*/g, '<em>$1</em>');
+      recBody.innerHTML = html;
     }
   });
 </script>

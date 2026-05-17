@@ -17,7 +17,7 @@
         <input type="hidden" name="choice_id" id="selected-choice" />
         <div style="display:grid; gap:12px;">
           {% for c in choix %}
-          <button type="button" class="sl-choice-item" data-choice-id="{{ c.id }}" aria-label="Choix {{ c.lettre }}">
+          <button type="button" class="sl-choice-item {% if c.style == 'NEUTRE' %}choice-neutre{% endif %}" data-choice-id="{{ c.id }}" role="button" tabindex="0" aria-label="Choix {{ c.lettre }}">
             <span class="sl-choice-letter">{{ c.lettre }}</span>
             <span class="sl-choice-text">{{ c.texte }}</span>
           </button>
