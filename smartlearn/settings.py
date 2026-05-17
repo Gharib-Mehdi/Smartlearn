@@ -11,6 +11,7 @@ ALLOWED_HOSTS = ["*"]
 CSRF_TRUSTED_ORIGINS = [
     "https://*.up.railway.app",
     "https://*.railway.app",
+    "https://smartlearn-production-6213.up.railway.app",
 ]
 
 INSTALLED_APPS = [
