@@ -8,6 +8,11 @@ SECRET_KEY = config("SECRET_KEY", default="django-insecure-smartlearn-dev-key")
 DEBUG = config("DEBUG", default=False, cast=bool)
 ALLOWED_HOSTS = ["*"]
 
+CSRF_TRUSTED_ORIGINS = [
+    "https://*.up.railway.app",
+    "https://*.railway.app",
+]
+
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
