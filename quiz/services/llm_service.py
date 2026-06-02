@@ -1,6 +1,8 @@
 import os
-from openai import OpenAI
+import requests
 from ..models import Recommandation
+from django.conf import settings
+
 
 
 def build_prompt(resultat):
@@ -25,81 +27,31 @@ def generate_recommendations(session):
     resultat = session.resultat
     prompt = build_prompt(resultat)
     try:
-        client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
-        response = client.chat.completions.create(
-            model="gpt-4o-mini",
-            messages=[
-                {
-                    "role": "system",
-                    "content": "Tu es un expert en sciences de l'education et en styles d'apprentissage.",
-                },
-                {"role": "user", "content": prompt},
-            ],
-            max_tokens=600,
-            temperature=0.7,
+        from django.conf import settings
+        groq_api_key = settings.GROQ_API_KEY
+        response = requests.post(
+            "https://api.groq.com/openai/v1/chat/completions",
+            headers={
+                "Authorization": f"Bearer {groq_api_key}",
+                "Content-Type": "application/json",
+            },
+            json={
+                "model": "llama-3.3-70b-versatile",  # ← modèle mis à jour
+                "messages": [
+                    {
+                        "role": "system",
+                        "content": "Tu es un expert en sciences de l'education et en styles d'apprentissage.",
+                    },
+                    {"role": "user", "content": prompt},
+                ],
+                "max_tokens": 1024,
+                "temperature": 0.7,
+            },
+            timeout=15,
         )
-        texte = response.choices[0].message.content
-        return Recommandation.objects.create(session=session, texte=texte, api_provider="openai")
-    except Exception:
-        fallback_texts = {
-            "VISUEL": (
-                "**Profil Visuel detecte**\n\n"
-                "Vous retenez mieux l'information quand elle est presentee "
-                "sous forme d'images, de schemas, de graphiques ou de videos.\n\n"
-                "**Strategies recommandees :**\n"
-                "- Utilisez des mind maps pour organiser vos idees\n"
-                "- Regardez des videos explicatives (YouTube, Khan Academy)\n"
-                "- Colorez et surlignez vos notes\n"
-                "- Transformez vos resumes en schemas visuels\n"
-                "- Utilisez des flashcards avec des images\n\n"
-                "**Outils recommandes :** Notion, Canva pour les schemas, Anki pour les flashcards."
-            ),
-            "AUDITIF": (
-                "**Profil Auditif detecte**\n\n"
-                "Vous retenez mieux l'information quand vous l'entendez "
-                "ou en la verbalisant.\n\n"
-                "**Strategies recommandees :**\n"
-                "- Ecoutez des podcasts et des cours audio\n"
-                "- Expliquez les concepts a voix haute ou a quelqu'un d'autre\n"
-                "- Enregistrez vos propres resumes vocaux\n"
-                "- Participez activement aux discussions de groupe\n"
-                "- Lisez a voix haute lors de vos revisions\n\n"
-                "**Outils recommandes :** Spotify Podcasts, Audible, Google Recorder."
-            ),
-            "KINESTHESIQUE": (
-                "**Profil Kinesthesique detecte**\n\n"
-                "Vous retenez mieux l'information en la pratiquant, "
-                "en l'experimentant concretement.\n\n"
-                "**Strategies recommandees :**\n"
-                "- Faites des exercices pratiques immediatement apres chaque lecon\n"
-                "- Apprenez en faisant des projets concrets\n"
-                "- Prenez des pauses regulieres pour integrer l'information\n"
-                "- Associez le mouvement a l'apprentissage\n"
-                "- Creez des maquettes ou des prototypes\n\n"
-                "**Outils recommandes :** GitHub pour les projets, laboratoires en ligne."
-            ),
-        }
-        fallback_equilibre = (
-            "Profil Multimodal detecte\n\n"
-            "Felicitations ! Votre profil d'apprentissage est parfaitement equilibre "
-            "entre les styles Visuel, Auditif et Kinesthesique. "
-            "C'est une caracteristique rare et precieuse : vous etes capable de vous adapter "
-            "a n'importe quelle methode d'enseignement.\n\n"
-            "Ce que cela signifie :\n"
-            "- Vous pouvez apprendre aussi bien par des videos que des podcasts ou des exercices\n"
-            "- Vous vous adaptez facilement a differents formateurs et environnements\n"
-            "- Vous pouvez choisir votre methode selon votre humeur ou le sujet\n\n"
-            "Strategies recommandees :\n"
-            "- Variez vos methodes pour maintenir l'engagement\n"
-            "- Combinez : lisez un chapitre, ecoutez un podcast, puis faites un exercice\n"
-            "- Profitez de cette flexibilite pour experimenter de nouvelles approches\n\n"
-            "Outils recommandes : Notion (visuel), Anki (pratique), Audible (auditif)."
-        )
-        if hasattr(resultat, "profil_type") and resultat.profil_type == "EQUILIBRE":
-            texte = fallback_equilibre
-        else:
-            texte = fallback_texts.get(
-                resultat.style_dominant,
-                "Continuez a explorer votre style d'apprentissage !",
-            )
-        return Recommandation.objects.create(session=session, texte=texte, api_provider="fallback")
+        response.raise_for_status()  # ← lève une exception si status != 200
+        texte = response.json()["choices"][0]["message"]["content"]
+        return Recommandation.objects.create(session=session, texte=texte, api_provider="groq")
+    except Exception as e:
+        print(f">>> GROQ ERROR: {e}")
+        # ... ton fallback existant inchangé

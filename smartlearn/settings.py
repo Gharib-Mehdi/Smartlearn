@@ -88,5 +88,5 @@ LOGIN_URL = "/accounts/login/"
 LOGIN_REDIRECT_URL = "/dashboard/"
 LOGOUT_REDIRECT_URL = "/"
 
-OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY", config("OPENAI_API_KEY", default=""))
+GROQ_API_KEY = config("GROQ_API_KEY", default="")
 ANTHROPIC_API_KEY = os.environ.get("ANTHROPIC_API_KEY", config("ANTHROPIC_API_KEY", default=""))
